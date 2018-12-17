@@ -24,9 +24,7 @@ import (
 
 	mygroupv1beta1 "github.com/jecho/ksops-test/pkg/apis/mygroup/v1beta1"
 	appsv1 "k8s.io/api/apps/v1"
-	//corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
-	//metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -93,46 +91,37 @@ type ReconcileConfigDeploymentSops struct {
 	scheme *runtime.Scheme
 }
 
-// Reconcile reads that state of the cluster for a ConfigDeploymentSops object and makes changes based on the state read
-// and what is in the ConfigDeploymentSops.Spec
-// TODO(user): Modify this Reconcile function to implement your Controller logic.  The scaffolding writes
-// a Deployment as an example
-// Automatically generate RBAC rules to allow the Controller to read and write Deployments
-// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=mygroup.k8s.io,resources=configdeploymentsops,verbs=get;list;watch;create;update;patch;delete
 func (r *ReconcileConfigDeploymentSops) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	// Fetch the ConfigDeploymentSops instance
 	instance := &mygroupv1beta1.ConfigDeploymentSops{}
 	err := r.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
-			// Object not found, return.  Created objects are automatically garbage collected.
-			// For additional cleanup logic use finalizers.
 			return reconcile.Result{}, nil
 		}
-		// Error reading the object - requeue the request.
+
 		return reconcile.Result{}, err
 	}
 
 	// grab the apiVersion and encrypt the manifest
-	yamlData := createYaml(instance.Spec.Manifest)
-	apiVersion := yamlData["apiVersion"]
-	decodedManifest, _ := decrypt.Data([]byte(instance.Spec.Manifest), "yaml")
-	decode := scheme.Codecs.UniversalDeserializer().Decode
+	decodedManifest, err := decrypt.Data([]byte(instance.Spec.Manifest), "yaml")
+	if err != nil {
+		log.Println("Unable to decrypt payload.")
+		log.Println(err)
+	}
 
+	decode := scheme.Codecs.UniversalDeserializer().Decode
 	obj, _, err := decode([]byte(decodedManifest), nil, nil)
 	if err != nil {
 		log.Println(err)
 	}
 
-	// load the appropriate apiVersion
 	deploy := &appsv1.Deployment{}
-	switch apiVersion {
-	case "apps/v1":
+	switch obj.(type) {
+	case *appsv1.Deployment:
 		deploy = obj.(*appsv1.Deployment)
-	case "extensions/v1beta1":
-		log.Println("loading: extensions/v1beta1")
-		//deploy = obj.(*v1beta.Deployment)
+	default:
+		deploy = obj.(*appsv1.Deployment)
 	}
 
 	// check if namespace is nil and set it appropriately
@@ -144,8 +133,6 @@ func (r *ReconcileConfigDeploymentSops) Reconcile(request reconcile.Request) (re
 		return reconcile.Result{}, err
 	}
 
-	// TODO(user): Change this for the object type created by your controller
-	// Check if the Deployment already exists
 	found := &appsv1.Deployment{}
 	err = r.Get(context.TODO(), types.NamespacedName{Name: deploy.Name, Namespace: deploy.Namespace}, found)
 	if err != nil && errors.IsNotFound(err) {
@@ -158,8 +145,6 @@ func (r *ReconcileConfigDeploymentSops) Reconcile(request reconcile.Request) (re
 		return reconcile.Result{}, err
 	}
 
-	// TODO(user): Change this for the object type created by your controller
-	// Update the found object and write the result back if there are any changes
 	if !reflect.DeepEqual(deploy.Spec, found.Spec) {
 		found.Spec = deploy.Spec
 		log.Printf("Updating Deployment %s/%s\n", deploy.Namespace, deploy.Name)
@@ -180,7 +165,6 @@ func createYaml(manifest string) map[interface{}]interface{} {
 	}
 
 	data := config.(map[interface{}]interface{})
-
 	return data
 }
 
