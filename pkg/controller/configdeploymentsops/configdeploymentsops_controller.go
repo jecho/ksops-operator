@@ -126,7 +126,7 @@ func (r *ReconcileConfigDeploymentSops) Reconcile(request reconcile.Request) (re
 	}
 
 	// load the appropriate apiVersion
-	deploy := obj.(*appsv1.Deployment)
+	deploy := &appsv1.Deployment{}
 	switch apiVersion {
 	case "apps/v1":
 		deploy = obj.(*appsv1.Deployment)
