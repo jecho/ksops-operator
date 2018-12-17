@@ -94,28 +94,28 @@ func (r *ReconcileConfigServiceSops) Reconcile(request reconcile.Request) (recon
 	err := r.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
-			// Object not found, return.  Created objects are automatically garbage collected.
-			// For additional cleanup logic use finalizers.
 			return reconcile.Result{}, nil
 		}
-		// Error reading the object - requeue the request.
+
 		return reconcile.Result{}, err
 	}
 
 	decodedManifest, err := decrypt.Data([]byte(instance.Spec.Manifest), "yaml")
 	if err != nil {
-		log.Println("unable to decrypt payload")
+		log.Println("Unable to decrypt payload.")
 		log.Println(err)
 	}
-	decode := scheme.Codecs.UniversalDeserializer().Decode
 
+	decode := scheme.Codecs.UniversalDeserializer().Decode
 	obj, _, err := decode([]byte(decodedManifest), nil, nil)
+
+	service := &corev1.Service{}
 	if err != nil {
 		log.Println(err)
+	} else {
+		// load the appropriate apiVersion
+		service = obj.(*corev1.Service)
 	}
-
-	// load the appropriate apiVersion
-	service := obj.(*corev1.Service)
 
 	// check if namespace is nil and set it appropriately
 	if service.Namespace == "" || len(service.Namespace) == 0 {
