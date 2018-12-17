@@ -19,6 +19,30 @@ rules:
 - apiGroups:
   - mygroup.k8s.io
   resources:
+  - configdeploymentsops
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - mygroup.k8s.io
+  resources:
   - sopssecrets
   verbs:
   - get

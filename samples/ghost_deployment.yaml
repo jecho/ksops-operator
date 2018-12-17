@@ -1,0 +1,51 @@
+apiVersion: mygroup.k8s.io/v1beta1
+kind: ConfigDeploymentSops
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: configdeploymentsops-sample
+spec:
+  manifest: |
+    apiVersion: ENC[AES256_GCM,data:XEZLS/OKVA==,iv:N6o/g2EMb4oQsFN981uyq1wuXiG9cHM2D7KWLpf70bk=,tag:VVEMifJscE6y+GbIJsHpyA==,type:str]
+    kind: ENC[AES256_GCM,data:yuEsTnj7DajaOQ==,iv:fxzwgGp57iEIMywYIxLDajdj1G5VcdDryQRrIjPKztQ=,tag:8A1GlO37Pj+Sm3MMxZuGuA==,type:str]
+    metadata:
+        name: ENC[AES256_GCM,data:z8fCmAJylx86d8YZ,iv:3yWOPJoUJrRAEe4L+5NXbs7USpzyGsgixu+UdmNcGUk=,tag:mdT79lema3gf5UvXnECcig==,type:str]
+    spec:
+        replicas: ENC[AES256_GCM,data:gQ==,iv:rDoSdFgE2UuSBHxyHrbU+FiCMCGjoJ8xyb/DBMz+Ojk=,tag:cMigwItqjaDCy0jNmvyklg==,type:int]
+        selector:
+            matchLabels:
+                name: ENC[AES256_GCM,data:RPzgigA=,iv:bJzUKoFliPiw07GsyJUaspb+BMV/vGTMKHC3CpwRPnU=,tag:VSDzMGFDtOv/MP0Pz/c2GQ==,type:str]
+                env: ENC[AES256_GCM,data:08kWxwa0oQ==,iv:MQgVcjpug4oiqWpwmuFXDBcYnYr82uhTZlE7YcS4+gQ=,tag:dyqGPdlpyxbcHjwl7vNUKQ==,type:str]
+        template:
+            metadata:
+                labels:
+                    name: ENC[AES256_GCM,data:Rf/bvL8=,iv:OjxirsWv/7FOZHhpueDlgJNcT7Pde79fHsLO8BgXP6Q=,tag:TPYHd6wymi7vXCenscxJhg==,type:str]
+                    env: ENC[AES256_GCM,data:mZQYLs+5uA==,iv:Oj9UY3i8HZDIPqzs61CItzEH/ro2T9oSD0SAt2RHXSU=,tag:nSeFUyWFaa5Rxj/mSi6bdQ==,type:str]
+            spec:
+                containers:
+                -   name: ENC[AES256_GCM,data:2LB+m2UdOffFyQA7GA94,iv:Vdq35CxcW+i6OLnvMiMhPFPjAE7WAfQ0ySJYmJEDejk=,tag:tpx9tALC6GvA4RT3AZnuTQ==,type:str]
+                    image: ENC[AES256_GCM,data:2f2FUvL/prBJGI5dp/mt,iv:4dGDV6ZsmVVrcOXj1P7EjfkeEvK2K/mixks3jodOtWQ=,tag:087veEM95qNABkn65nLMpg==,type:str]
+                    ports:
+                    -   containerPort: ENC[AES256_GCM,data:iXmwbA==,iv:shucwMJXnopE3k2t0rzAoG458xKCnhAp0mRb0NZfYDw=,tag:Bd4zlHrOY2WlhsSxlFOknA==,type:int]
+    sops:
+        kms: []
+        gcp_kms: []
+        azure_kv: []
+        lastmodified: '2018-12-17T07:53:03Z'
+        mac: ENC[AES256_GCM,data:EhZPZD5EmYnC8FdZ/2zzMWPZ9mLv3oQoQ6YTBWFJg8s2YXgaVp4YQAgdNrroWaiQlOt3NTphYKPUYoPD6ECQ98vUN4naVQJs1zsSh9jbc1AFE/IjHC8N65L6nT+Fw/T0+2+DwrZVrp+zya7b+HubL409pZlHVTRuxQKFGqfCOYI=,iv:09G7D5PvSTu14SuiCcHan8aLfE0r19ja8kuEQqxTy8s=,tag:TPxjikv2Qqwq/kmDwj0IKg==,type:str]
+        pgp:
+        -   created_at: '2018-12-17T07:53:02Z'
+            enc: |-
+                -----BEGIN PGP MESSAGE-----
+
+                wYwDEEVDpnzXnMABBABKXtFUJ8r6jk58jFizbryC0AcsR0hzXWhuCeh+1tmim2Id
+                nqdVb5L07RgnjWQBFkiX5hyPn/98OTtn8aVoR3IRjIDqeM5PhP+TYeCoYJgmHKdH
+                rbrqIRJkvp9xcVQfclBxKQWVqGwtfEIS5QHNMYdiIJj9IXO0aFzVCwz1iWnbP9Lg
+                AeR6C0VkXBnij6NHKT7XlMU84YHx4JXgDOEVx+AY4ubV0iHg2OUVQYH7X2Qony/5
+                0jX9JGbRNPzUv7KZE45HxC6dnvG5n+At5LsCXsMU2sPAZSu/iqGRkPTi4P8wPeHZ
+                LAA=
+                =Sp6B
+                -----END PGP MESSAGE-----
+            fp: 1022470DE3F0BC54BC6AB62DE05550BC07FB1A0A
+        unencrypted_suffix: _unencrypted
+        version: 3.2.0
