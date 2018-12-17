@@ -1,36 +1,44 @@
-apiVersion: ENC[AES256_GCM,data:3sE=,iv:nG/xxIArt4ZxwQlg5VUnPDyK9WhVEWaWQpk03UY6N+k=,tag:iZWofhWquXBgvvYVC1hSrQ==,type:str]
-kind: ENC[AES256_GCM,data:9YDK5OZL8g==,iv:NmhfqtHnb/bFnYzzSnQ0b16wEkMkBY56CbyW7hLoltQ=,tag:RaLt5ky9YB8SXlysLaXs/g==,type:str]
+apiVersion: mygroup.k8s.io/v1beta1
+kind: ConfigServiceSops
 metadata:
-    name: ENC[AES256_GCM,data:1uooFd02rfn7,iv:M1l9rPOnjXIxm2dj/7aHa0JrGtQefqy/D9Izbg1iptg=,tag:gVNYnPicCVMY9uSdf0RkEQ==,type:str]
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: configservicesops-sample
 spec:
-    type: ENC[AES256_GCM,data:mFhjU5To0fY=,iv:DiYHJOsdgZh8cDTJx5IiAYXA3YMmO7hRx0keJxlevJA=,tag:+DoD8tF9nz/7I6e1zLKJ3A==,type:str]
-    ports:
-    -   port: ENC[AES256_GCM,data:KWs=,iv:4JNTeuZV01wuaDwfto5282Qow0F9sNMDVJ6Mmsun69o=,tag:4RPphVPAmavEu9in+D2P3A==,type:int]
-        targetPort: ENC[AES256_GCM,data:Fsou1w==,iv:c2N2Ig333Zslloz3jEPStL3YFlBCW26FZzXFGMf5F2g=,tag:aqG4Myxq0QbMpDxo2MnGUA==,type:int]
-        nodePort: ENC[AES256_GCM,data:PITbiiE=,iv:xOjhGo9YM6+uLsHOHjWSxSg1vcvYOv0lAl07m7odPW8=,tag:kPgva6DgiWd0MA08YIIpww==,type:int]
-        name: ENC[AES256_GCM,data:B6IrRw==,iv:QWrJq/fWhBioMH6J5EDZRUqCJd9tFJfN/3Uy+wbrZMM=,tag:4we8DBOwjtGs3uFlwtQo7w==,type:str]
-    selector:
-        name: ENC[AES256_GCM,data:gcux0kg=,iv:YvRhYXlOe0GFhDSW8BmMVePr4HFcGwYMhN6OrEUbaFs=,tag:6IsSd8xkDlThZiwuvlcxPA==,type:str]
-        env: ENC[AES256_GCM,data:gCWHeiwkLQ==,iv:Kpu4q4UN34GCzvIykfR9kFTweEiwaJw6E+do25/pSnA=,tag:v1Ud0mEB3fcRIl7vmd0mtg==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    lastmodified: '2018-12-17T07:30:10Z'
-    mac: ENC[AES256_GCM,data:4QqP6Zdyv2NGTGXazAc2F2HGY42Pv/6lZClJEfplXrHexJDh647gYi0XTBs7TD5G7GPIEbD4QBHK7Wiq/WAq7KS8abJuKH60KR8D6BGk3cSSiWfnI7lBxJon5t9N5AfPhcjmjfdux0Ye+EJmmH5se2kv+oZjtDs/tdfOwzjHr2M=,iv:ybwY5nfD5PaQyOdQI2/MTJC5wkljfWyisuxiLSVXTik=,tag:/HaazDDJCpKyGhIKacaaoQ==,type:str]
-    pgp:
-    -   created_at: '2018-12-17T07:30:10Z'
-        enc: |-
-            -----BEGIN PGP MESSAGE-----
+  manifest: |
+    apiVersion: ENC[AES256_GCM,data:3sE=,iv:nG/xxIArt4ZxwQlg5VUnPDyK9WhVEWaWQpk03UY6N+k=,tag:iZWofhWquXBgvvYVC1hSrQ==,type:str]
+    kind: ENC[AES256_GCM,data:9YDK5OZL8g==,iv:NmhfqtHnb/bFnYzzSnQ0b16wEkMkBY56CbyW7hLoltQ=,tag:RaLt5ky9YB8SXlysLaXs/g==,type:str]
+    metadata:
+        name: ENC[AES256_GCM,data:1uooFd02rfn7,iv:M1l9rPOnjXIxm2dj/7aHa0JrGtQefqy/D9Izbg1iptg=,tag:gVNYnPicCVMY9uSdf0RkEQ==,type:str]
+    spec:
+        type: ENC[AES256_GCM,data:mFhjU5To0fY=,iv:DiYHJOsdgZh8cDTJx5IiAYXA3YMmO7hRx0keJxlevJA=,tag:+DoD8tF9nz/7I6e1zLKJ3A==,type:str]
+        ports:
+        -   port: ENC[AES256_GCM,data:KWs=,iv:4JNTeuZV01wuaDwfto5282Qow0F9sNMDVJ6Mmsun69o=,tag:4RPphVPAmavEu9in+D2P3A==,type:int]
+            targetPort: ENC[AES256_GCM,data:Fsou1w==,iv:c2N2Ig333Zslloz3jEPStL3YFlBCW26FZzXFGMf5F2g=,tag:aqG4Myxq0QbMpDxo2MnGUA==,type:int]
+            nodePort: ENC[AES256_GCM,data:PITbiiE=,iv:xOjhGo9YM6+uLsHOHjWSxSg1vcvYOv0lAl07m7odPW8=,tag:kPgva6DgiWd0MA08YIIpww==,type:int]
+            name: ENC[AES256_GCM,data:B6IrRw==,iv:QWrJq/fWhBioMH6J5EDZRUqCJd9tFJfN/3Uy+wbrZMM=,tag:4we8DBOwjtGs3uFlwtQo7w==,type:str]
+        selector:
+            name: ENC[AES256_GCM,data:gcux0kg=,iv:YvRhYXlOe0GFhDSW8BmMVePr4HFcGwYMhN6OrEUbaFs=,tag:6IsSd8xkDlThZiwuvlcxPA==,type:str]
+            env: ENC[AES256_GCM,data:gCWHeiwkLQ==,iv:Kpu4q4UN34GCzvIykfR9kFTweEiwaJw6E+do25/pSnA=,tag:v1Ud0mEB3fcRIl7vmd0mtg==,type:str]
+    sops:
+        kms: []
+        gcp_kms: []
+        azure_kv: []
+        lastmodified: '2018-12-17T07:30:10Z'
+        mac: ENC[AES256_GCM,data:4QqP6Zdyv2NGTGXazAc2F2HGY42Pv/6lZClJEfplXrHexJDh647gYi0XTBs7TD5G7GPIEbD4QBHK7Wiq/WAq7KS8abJuKH60KR8D6BGk3cSSiWfnI7lBxJon5t9N5AfPhcjmjfdux0Ye+EJmmH5se2kv+oZjtDs/tdfOwzjHr2M=,iv:ybwY5nfD5PaQyOdQI2/MTJC5wkljfWyisuxiLSVXTik=,tag:/HaazDDJCpKyGhIKacaaoQ==,type:str]
+        pgp:
+        -   created_at: '2018-12-17T07:30:10Z'
+            enc: |-
+                -----BEGIN PGP MESSAGE-----
 
-            wYwDEEVDpnzXnMABBAAShSmubdrSjgbZh51uy9hzcTtMkQGlJ6EZXVbKdI4bcahM
-            hWne0/pIRpL/Eq/VMfYb11mlq0/WZcCdxVD2asdxqtQnRD8QECc/zQfcHcPXKOUD
-            cB4vhuEbSIW0pKIzITDrDyZNnbDxcqqGNPppPO/eudOyySRqq/k3lajz3Ffgs9Lg
-            AeSZUA/UVUGaMP3Yp93Y8pSa4XvW4Krgj+F+IeCY4qCRlKbg/OWEte5xk6iBaRCM
-            eX6O6/6J8oppxInFCvBsHWG66viY4OCP5JLhCMtoO9CaJHxj0oWKE/rib1CgRuGq
-            4wA=
-            =2RDZ
-            -----END PGP MESSAGE-----
-        fp: 1022470DE3F0BC54BC6AB62DE05550BC07FB1A0A
-    unencrypted_suffix: _unencrypted
-    version: 3.2.0
+                wYwDEEVDpnzXnMABBAAShSmubdrSjgbZh51uy9hzcTtMkQGlJ6EZXVbKdI4bcahM
+                hWne0/pIRpL/Eq/VMfYb11mlq0/WZcCdxVD2asdxqtQnRD8QECc/zQfcHcPXKOUD
+                cB4vhuEbSIW0pKIzITDrDyZNnbDxcqqGNPppPO/eudOyySRqq/k3lajz3Ffgs9Lg
+                AeSZUA/UVUGaMP3Yp93Y8pSa4XvW4Krgj+F+IeCY4qCRlKbg/OWEte5xk6iBaRCM
+                eX6O6/6J8oppxInFCvBsHWG66viY4OCP5JLhCMtoO9CaJHxj0oWKE/rib1CgRuGq
+                4wA=
+                =2RDZ
+                -----END PGP MESSAGE-----
+            fp: 1022470DE3F0BC54BC6AB62DE05550BC07FB1A0A
+        unencrypted_suffix: _unencrypted
+        version: 3.2.0
