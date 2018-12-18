@@ -98,7 +98,6 @@ configdeploymentsops-sample   1h
 $ kubectl get pods
 NAME                            READY   STATUS    RESTARTS   AGE
 ghost-deploy-5fc8f79f75-rcr65   1/1     Running   0          1h
-
 ```
 
 Retrieve the `minikube ip` and the assigned NodePort and reach through your browser
