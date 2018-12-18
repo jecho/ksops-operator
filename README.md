@@ -26,11 +26,11 @@ $ export GOPATH="$HOME/go"
 ## Build
 
 ### Clusters
-todo
-non minikube cluster
+todo;
+non minikube cluster /w docker image build
 
 ### Local
-Clones, vendors and installs crds' onto the cluster:
+Clones, vendors and installs crds onto the cluster:
 ```
 $ git clone git@github.com:jecho/ksops-test.git
 $ cd ksops-test
@@ -45,7 +45,7 @@ Run a local copy
 $ make run
 ```
 
-Verify that our custom resource definitions are installed properly
+Verify that our _custom resource definitions_ are installed properly
 ```
 $ kubectl get crd
 NAME                                  CREATED AT
@@ -56,7 +56,7 @@ configservicesops.mygroup.k8s.io      2018-12-17T21:50:44Z
 
 ## Testing with Minikube
 
-Files will be encrypted as such
+Files will be encrypted as such, snippet _ghost_deployment.yaml_
 
 ```
 apiVersion: mygroup.k8s.io/v1beta1
@@ -82,7 +82,7 @@ spec:
 ```
 Running files as their respective `kind` CRDs will decrypt the resources and that Kubernetes can consume
 
-Run an instance of our `ghost` demo
+To do this, run an instance of our `ghost` demo
 
 ```
 $ kubectl create -f ghost_deployment.yaml
@@ -100,7 +100,7 @@ NAME                            READY   STATUS    RESTARTS   AGE
 ghost-deploy-5fc8f79f75-rcr65   1/1     Running   0          1h
 ```
 
-Retrieve the `minikube ip` and the assigned NodePort and reach through your browser
+Retrieve the `minikube ip` and the assigned `node port` and reach through your browser
 ```
 $ NODE_PORT=$(kubectl get svc ghost-svc --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
 $ echo http://$(minikube ip):${NODE_PORT}
