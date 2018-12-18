@@ -24,12 +24,16 @@ $ export GOPATH="$HOME/go"
 - Minikube
 
 ## Build
+Don't forget to login into your docker hub account
+### Publishing on Cloud
+```
+export IMG=jechocnct/ksops:alpine
+make docker-build
+make docker-push
+make deploy
+```
 
-### Clusters
-todo;
-non minikube cluster /w docker image build
-
-### Local
+### Local Build and Deployment (Minikube)
 Clones, vendors and installs crds onto the cluster:
 ```
 $ git clone git@github.com:jecho/ksops-test.git
@@ -38,13 +42,12 @@ $ dep ensure
 $ make 
 $ make install
 ```
-
-### Deploy
 Run a local copy
 ```
 $ make run
 ```
 
+### Verify
 Verify that our _custom resource definitions_ are installed properly
 ```
 $ kubectl get crd
@@ -54,7 +57,7 @@ configingresssops.mygroup.k8s.io      2018-12-17T22:47:57Z
 configservicesops.mygroup.k8s.io      2018-12-17T21:50:44Z
 ```
 
-## Testing with Minikube
+## Testing
 
 Files will be encrypted as such, snippet _ghost_deployment.yaml_
 
@@ -105,3 +108,6 @@ Retrieve the `minikube ip` and the assigned `node port` and reach through your b
 $ NODE_PORT=$(kubectl get svc ghost-svc --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
 $ echo http://$(minikube ip):${NODE_PORT}
 ```
+
+## Usage
+stuff
