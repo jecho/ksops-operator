@@ -113,14 +113,13 @@ func (r *ReconcileConfigDeploymentSops) Reconcile(request reconcile.Request) (re
 	decode := scheme.Codecs.UniversalDeserializer().Decode
 	obj, _, err := decode([]byte(decodedManifest), nil, nil)
 	if err != nil {
+		log.Println("Deserializer failed.")
 		log.Println(err)
 	}
 
 	deploy := &appsv1.Deployment{}
 	switch obj.(type) {
 	case *appsv1.Deployment:
-		deploy = obj.(*appsv1.Deployment)
-	default:
 		deploy = obj.(*appsv1.Deployment)
 	}
 
