@@ -21,7 +21,7 @@ $ export GOPATH="$HOME/go"
 ### Requirements
 - Kubernetes 1.9+
 - Kubebuilder 1.0.5+
-- Minikube
+~~- Minikube~~
 
 ## Build
 Don't forget to login into your docker hub account
