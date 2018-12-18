@@ -25,15 +25,15 @@ $ export GOPATH="$HOME/go"
 
 ## Build
 Don't forget to login into your docker hub account
-### Publishing on Cloud
+### Publishing
 ```
-export IMG=jechocnct/ksops:alpine
-make docker-build
-make docker-push
-make deploy
+$ export IMG=jechocnct/ksops:alpine
+$ make docker-build
+$ make docker-push
+$ make deploy
 ```
 
-### Local Build and Deployment (Minikube)
+### Local (Minikube)
 Clones, vendors and installs crds onto the cluster:
 ```
 $ git clone git@github.com:jecho/ksops-test.git
