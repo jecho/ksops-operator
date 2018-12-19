@@ -8,10 +8,11 @@ sops for Kubernetes decrypts Kubernetes sops manifest files that can be securely
 Directions are intended for Mac OSX users
 
 ### Prerequisites
-- install brew and golang 1.8+
+- install brew, golang 1.8+, and dep
 ```
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 $ brew install go
+$ brew install dep
 ```
 - set your $GOPATH
 ```
@@ -21,13 +22,23 @@ $ export GOPATH="$HOME/go"
 ### Requirements
 - Kubernetes 1.9+
 - Kubebuilder 1.0.5+
-~~- Minikube~~
+-~~ Minikube~~
+
+## Quickstart
+
+Uses the default pgp key provided with the github.com/mozilla/sops repo. It is advised to import your own pgp keys and mount securely.
+
+```
+$ git clone git@github.com:jecho/ksops-test.git
+$ cd ksops-test
+$ make deploy
+```
 
 ## Build
 
 ### Publishing and Deploying
 ```
-$ docker login _your info_
+$ docker login
 $ export IMG=jechocnct/ksops-poc
 $ make docker-build
 $ make docker-push
@@ -46,7 +57,7 @@ $ dep ensure
 $ make 
 $ make install
 ```
-Run a local copy
+Run in our local cluster
 ```
 $ make run
 ```
@@ -73,7 +84,7 @@ configservicesops.mygroup.k8s.io      2018-12-17T21:50:44Z
 
 ## Testing
 
-Files will be encrypted in the sops standard as shown below. snippet _ghost_deployment.yaml_
+Files will be encrypted in the sops standard as shown below. snippet of _ghost_deployment.yaml_
 
 ```
 apiVersion: mygroup.k8s.io/v1beta1
@@ -114,7 +125,11 @@ configdeploymentsops-sample   1h
 
 $ kubectl get pods
 NAME                            READY   STATUS    RESTARTS   AGE
-ghost-deploy-5fc8f79f75-rcr65   1/1     Running   0          1h
+ghost-deploy-5fc8f79f75-rcr65   1/1     Running   0          8m
+
+$ kubectl get service
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+ghost-svc    NodePort    10.109.185.129   <none>        80:30180/TCP   8m
 ```
 
 Retrieve the `minikube ip` and the assigned `node port` and reach through your web browser
@@ -125,10 +140,10 @@ $ echo http://$(minikube ip):${NODE_PORT}
 
 ## Usage
 
-### Setup Encrypted Files
-ConfigDeploymentSops = Deployment
-ConfigServiceSops = Service
-ConfigIngressSops = Ingress
+### Using Ksops Files
+ConfigDeploymentSops = Deployment . 
+ConfigServiceSops = Service . 
+ConfigIngressSops = Ingress . 
 
 After a yaml resource has been encrypted, you select it's `kind` and toss the sops data in the manifest keypair in spec:
 ```
@@ -144,4 +159,5 @@ spec:
 ```
 
 ### Encrypting Files
-todo; basically only uses GPG, and not cloud providers kms
+TODO;  
+basically only uses PGP, and not cloud providers kms
