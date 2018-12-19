@@ -161,6 +161,24 @@ $ cd sops
 $ gpg --import pgp/sops_functional_tests_key.asc
 $ sops -e -i resource.yaml
 ```
+>output
+```
+apiVersion: mygroup.k8s.io/v1beta1
+kind: ConfigDeploymentSops
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: configdeploymentsops-sample
+spec:
+  manifest: |
+    apiVersion: ENC[AES256_GCM,data:XEZLS/OKVA==,iv:N6o/g2EMb4oQsFN981uyq1wuXiG9cHM2D7KWLpf70bk=,tag:VVEMifJscE6y+GbIJsHpyA==,type:str]
+    kind: ENC[AES256_GCM,data:yuEsTnj7DajaOQ==,iv:fxzwgGp57iEIMywYIxLDajdj1G5VcdDryQRrIjPKztQ=,tag:8A1GlO37Pj+Sm3MMxZuGuA==,type:str]
+    metadata:
+        name: ENC[AES256_GCM,data:z8fCmAJylx86d8YZ,iv:3yWOPJoUJrRAEe4L+5NXbs7USpzyGsgixu+UdmNcGUk=,tag:mdT79lema3gf5UvXnECcig==,type:str]
+    spec:
+        replicas: ENC[AES256_GCM,data:gQ==,iv:rDoSdFgE2UuSBHxyHrbU+FiCMCGjoJ8xyb/DBMz+Ojk=,tag:cMigwItqjaDCy0jNmvyklg==,type:int]
+  ...
+```
 
 After a yaml resource has been encrypted, you select it's associated `kind` and toss the sops data in the manifest keypair _value_ in spec:
 ```
