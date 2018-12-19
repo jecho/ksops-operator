@@ -1,7 +1,7 @@
 # ksops-poc, sops for Kubernetes
 
 ## Overview
-sops for Kubernetes decrypts Kubernetes sops files that can be securely stored along side your code. Extends the Kubernetes API by declaring special _customer resource definition_ that extend their Kubernetes counterparts `kind`; 
+sops for Kubernetes decrypts Kubernetes sops manifest files that can be securely stored along side your code. Extends the Kubernetes API by declaring special _customer resource definition_ that extend their Kubernetes counterparts `kind`; 
 `Deployment=ConfigDeploymentSops`, `Ingress=ConfigIngressSops`, `Service=ConfigServiceSops` ...
 
 ### Getting started
@@ -24,17 +24,21 @@ $ export GOPATH="$HOME/go"
 ~~- Minikube~~
 
 ## Build
-Don't forget to login into your docker hub account
-### Publishing
+
+### Publishing and Deploying
 ```
-$ export IMG=jechocnct/ksops:alpine
+$ docker login _your info_
+$ export IMG=jechocnct/ksops-poc
 $ make docker-build
 $ make docker-push
+```
+Deploy into our cluster
+```
 $ make deploy
 ```
 
-### Local (Minikube)
-Clones, vendors and installs crds onto the cluster:
+### Locality with Minikube
+
 ```
 $ git clone git@github.com:jecho/ksops-test.git
 $ cd ksops-test
@@ -48,8 +52,18 @@ $ make run
 ```
 
 ### Verify
-Verify that our _custom resource definitions_ are installed properly
+Verify that _ksops-test-system_ and _custom resource definitions_ are up and running
 ```
+$ kubectl get all -n=ksops-test-system
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/ksops-test-controller-manager-0   1/1     Running   3          8m
+
+NAME                                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/ksops-test-controller-manager-service   ClusterIP   10.110.39.36   <none>        443/TCP   17m
+
+NAME                                             DESIRED   CURRENT   AGE
+statefulset.apps/ksops-test-controller-manager   1         1         17m
+
 $ kubectl get crd
 NAME                                  CREATED AT
 configdeploymentsops.mygroup.k8s.io   2018-12-17T21:50:44Z
@@ -59,7 +73,7 @@ configservicesops.mygroup.k8s.io      2018-12-17T21:50:44Z
 
 ## Testing
 
-Files will be encrypted as such, snippet _ghost_deployment.yaml_
+Files will be encrypted in the sops standard as shown below. snippet _ghost_deployment.yaml_
 
 ```
 apiVersion: mygroup.k8s.io/v1beta1
@@ -103,11 +117,31 @@ NAME                            READY   STATUS    RESTARTS   AGE
 ghost-deploy-5fc8f79f75-rcr65   1/1     Running   0          1h
 ```
 
-Retrieve the `minikube ip` and the assigned `node port` and reach through your browser
+Retrieve the `minikube ip` and the assigned `node port` and reach through your web browser
 ```
 $ NODE_PORT=$(kubectl get svc ghost-svc --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
 $ echo http://$(minikube ip):${NODE_PORT}
 ```
 
 ## Usage
-stuff
+
+### Setup Encrypted Files
+ConfigDeploymentSops = Deployment
+ConfigServiceSops = Service
+ConfigIngressSops = Ingress
+
+After a yaml resource has been encrypted, you select it's `kind` and toss the sops data in the manifest keypair in spec:
+```
+apiVersion: mygroup.k8s.io/v1beta1
+kind: ConfigDeploymentSops  <--- kubernetes preemptive wrapper 
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: configdeploymentsops-sample
+spec:
+  manifest: |
+    <--- encrypted sops file
+```
+
+### Encrypting Files
+todo; basically only uses GPG, and not cloud providers kms
