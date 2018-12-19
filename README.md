@@ -8,11 +8,12 @@ sops for Kubernetes decrypts Kubernetes sops manifest files that can be securely
 Directions are intended for Mac OSX users
 
 ### Prerequisites
-- install brew, golang 1.8+, and dep
+- install brew, golang 1.8+, dep, and sops
 ```
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 $ brew install go
 $ brew install dep
+$ brew install sops
 ```
 - set your $GOPATH
 ```
@@ -26,7 +27,8 @@ $ export GOPATH="$HOME/go"
 
 ## Quickstart
 
-Uses the default pgp key provided with the github.com/mozilla/sops repo. It is advised to import your own pgp keys and mount securely.
+### Warning
+Uses the default pgp key provided with the github.com/mozilla/sops repo. It is advised to import your own pgp keys and mount securely
 
 ```
 $ git clone git@github.com:jecho/ksops-test.git
@@ -146,12 +148,21 @@ $ echo http://$(minikube ip):${NODE_PORT}
 
 ## Usage
 
-### Using Ksops Files
-ConfigDeploymentSops = Deployment . 
-ConfigServiceSops = Service . 
-ConfigIngressSops = Ingress . 
+### Types
+`ConfigDeploymentSops` = `Deployment`  
+`ConfigServiceSops` = `Service`  
+`ConfigIngressSops` = `Ingress`  
 
-After a yaml resource has been encrypted, you select it's `kind` and toss the sops data in the manifest keypair in spec:
+### Encrypting Files
+Encrypt your resource file. For our example, we use the stock pgp key provided in mozilla/sops repo
+```
+$ git clone https://github.com/mozilla/sops.git
+$ cd sops
+$ gpg --import pgp/sops_functional_tests_key.asc
+$ sops -e -i resource.yaml
+```
+
+After a yaml resource has been encrypted, you select it's associated `kind` and toss the sops data in the manifest keypair _value_ in spec:
 ```
 apiVersion: mygroup.k8s.io/v1beta1
 kind: ConfigDeploymentSops  <--- kubernetes preemptive wrapper 
@@ -161,9 +172,5 @@ metadata:
   name: configdeploymentsops-sample
 spec:
   manifest: |
-    <--- encrypted sops file
+    <--- encrypted sops data
 ```
-
-### Encrypting Files
-TODO;  
-basically only uses PGP, and not cloud providers kms
