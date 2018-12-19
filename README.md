@@ -33,6 +33,7 @@ Uses the default pgp key provided with the github.com/mozilla/sops repo. It is a
 ```
 $ git clone git@github.com:jecho/ksops-test.git
 $ cd ksops-test
+$ make
 $ make deploy
 ```
 
