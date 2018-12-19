@@ -81,6 +81,12 @@ configdeploymentsops.mygroup.k8s.io   2018-12-17T21:50:44Z
 configingresssops.mygroup.k8s.io      2018-12-17T22:47:57Z
 configservicesops.mygroup.k8s.io      2018-12-17T21:50:44Z
 ```
+If resources do not come up, bind a _cluster role binding_ to ksops-test-system:default
+```
+$ kubectl create clusterrolebinding kube-sops-admin \
+$   --clusterrole=cluster-admin \
+$   --serviceaccount=ksops-test-system:default
+```
 
 ## Testing
 
